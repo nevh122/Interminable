@@ -5,7 +5,7 @@ using RPG.Player.Movement;
 
 namespace RPG.Core.Combat
 {
-    public class Fighter : MonoBehaviour
+    public class Fighter : MonoBehaviour, IAction
     {
         [SerializeField] float weaponRange = 2f;
         Transform target;
@@ -18,8 +18,14 @@ namespace RPG.Core.Combat
             }
             else
             {
-                GetComponent<Mover>().Stop();
+                GetComponent<Mover>().Cancel();
+                AttackBehavior();
             }
+        }
+
+        private void AttackBehavior()
+        {
+            GetComponent<Animator>().SetTrigger("attack");
         }
 
         private bool GetRange()
@@ -29,11 +35,18 @@ namespace RPG.Core.Combat
 
         public void Attack(Targeting combattarget)
         {
+            GetComponent<ActionScheduler>().StartAction(this);
             target = combattarget.transform;
         }
         public void Cancel()
         {
             target = null;
+        }
+
+        //Animation Event
+        void Hit()
+        {
+
         }
     }
 }

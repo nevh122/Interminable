@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using RPG.Core.Combat;
+using RPG.Core;
 
 namespace RPG.Player.Movement
 {
-    public class Mover : MonoBehaviour
+    public class Mover : MonoBehaviour, IAction
     {
         [SerializeField] Transform target;
         NavMeshAgent navmeshagent;
@@ -26,10 +26,10 @@ namespace RPG.Player.Movement
         }
         public void StartMove(Vector3 destination)
         {
-            GetComponent<Fighter>().Cancel();
+            GetComponent<ActionScheduler>().StartAction(this);
             MoveTo(destination);
         }
-        public void Stop()
+        public void Cancel()
         {
             navmeshagent.isStopped = true;
         }
