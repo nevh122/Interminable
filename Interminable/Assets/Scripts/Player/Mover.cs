@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using RPG.Core;
+using RPG.Core.Combat;
 
 namespace RPG.Player.Movement
 {
@@ -10,13 +11,16 @@ namespace RPG.Player.Movement
     {
         [SerializeField] Transform target;
         NavMeshAgent navmeshagent;
+        Health health;
 
         private void Start()
         {
             navmeshagent = GetComponent<NavMeshAgent>();
+            health = GetComponent<Health>();
         }
         void Update()
         {
+            navmeshagent.enabled = !health.IsDead();
             UpdateAnimator();
         }
         public void MoveTo(Vector3 destination)

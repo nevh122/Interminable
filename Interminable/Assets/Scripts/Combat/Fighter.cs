@@ -14,7 +14,7 @@ namespace RPG.Core.Combat
         float timeSinceLastAttack = 0;
         private void Update()
         {
-            timeSinceLastAttack += Time.deltaTime;
+            timeSinceLastAttack = Mathf.Infinity;
             if (target == null) return;
             if (target.IsDead()) return;
             if (!GetRange())
@@ -48,7 +48,7 @@ namespace RPG.Core.Combat
         {
             return Vector3.Distance(transform.position, target.transform.position) < weaponRange;
         }
-        public bool CanAttack(Targeting combatTarget)
+        public bool CanAttack(GameObject combatTarget)
         {
             if(combatTarget == null)
             {
@@ -57,7 +57,7 @@ namespace RPG.Core.Combat
             Health targettoTest = combatTarget.GetComponent<Health>();
             return targettoTest != null && !targettoTest.IsDead();
         }
-        public void Attack(Targeting combattarget)
+        public void Attack(GameObject combattarget)
         {
             GetComponent<ActionScheduler>().StartAction(this);
             target = combattarget.GetComponent<Health>();
