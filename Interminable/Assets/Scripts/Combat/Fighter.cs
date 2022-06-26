@@ -19,7 +19,7 @@ namespace RPG.Core.Combat
             if (target.IsDead()) return;
             if (!GetRange())
             {
-                GetComponent<Mover>().MoveTo(target.transform.position);
+                GetComponent<Mover>().MoveTo(target.transform.position, 1f);
             }
             else
             {
@@ -66,6 +66,7 @@ namespace RPG.Core.Combat
         {
             StopAttack();
             target = null;
+            GetComponent<Mover>().Cancel();
         }
         private void StopAttack()
         {
